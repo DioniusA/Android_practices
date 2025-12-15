@@ -1,8 +1,5 @@
 package com.example.recipeplanner.domain.model
 
-/**
- * Represents an item in the shopping list.
- */
 data class ShoppingListItem(
     val id: String,
     val userId: String,
@@ -13,9 +10,6 @@ data class ShoppingListItem(
     val recipeIds: List<String>
 )
 
-/**
- * Categories for organizing shopping list items.
- */
 enum class IngredientCategory {
     PRODUCE,
     DAIRY,
@@ -32,9 +26,6 @@ enum class IngredientCategory {
         get() = name.lowercase().replaceFirstChar { it.uppercase() }
 
     companion object {
-        /**
-         * Attempts to categorize an ingredient by its name.
-         */
         fun fromIngredientName(name: String): IngredientCategory {
             val lowerName = name.lowercase()
             return when {

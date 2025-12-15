@@ -6,9 +6,6 @@ import kotlinx.coroutines.flow.Flow
 import java.time.LocalDate
 import javax.inject.Inject
 
-/**
- * Use case for getting the meal plan for a week.
- */
 class GetMealPlanForWeekUseCase @Inject constructor(
     private val mealPlanRepository: MealPlanRepository
 ) {

@@ -6,14 +6,10 @@ import com.example.recipeplanner.domain.util.AppError
 import com.example.recipeplanner.domain.util.AppResult
 import javax.inject.Inject
 
-/**
- * Use case for signing in a user.
- */
 class SignInUseCase @Inject constructor(
     private val authRepository: AuthRepository
 ) {
     suspend operator fun invoke(email: String, password: String): AppResult<User> {
-        // Validate input
         if (email.isBlank()) {
             return AppResult.Error(AppError.InvalidCredentials("Email cannot be empty"))
         }

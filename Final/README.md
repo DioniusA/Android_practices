@@ -3,7 +3,7 @@
 A modern Android application for meal planning, recipe discovery, and shopping list management. Built with Kotlin, Jetpack Compose, and Clean Architecture.
 
 ![Android](https://img.shields.io/badge/Android-26%2B-green)
-![Kotlin](https://img.shields.io/badge/Kotlin-2.0-blue)
+![Kotlin](https://img.shields.io/badge/Kotlin-2.0.21-blue)
 ![Compose](https://img.shields.io/badge/Jetpack%20Compose-Material%203-purple)
 
 ## Features
@@ -48,7 +48,7 @@ app/
 │   │   ├── mealplan/
 │   │   ├── recipe/
 │   │   └── shoppinglist/
-│   └── util/                      # AppResult, AppError
+│   └── util/                      # AppResult
 │
 ├── presentation/                  # Presentation Layer
 │   ├── auth/                      # Login/Register
@@ -59,6 +59,7 @@ app/
 │   ├── shoppinglist/              # Shopping List
 │   ├── settings/                  # App Settings
 │   ├── cookmode/                  # Cook Mode Feature
+│   ├── common/                    # UiState
 │   ├── components/                # Reusable UI Components
 │   ├── navigation/                # Navigation Graph
 │   └── theme/                     # Material 3 Theme
@@ -68,24 +69,27 @@ app/
 
 ## Tech Stack
 
-| Category | Technology |
-|----------|------------|
-| Language | Kotlin 2.0 |
-| UI Framework | Jetpack Compose + Material 3 |
-| Architecture | Clean Architecture + MVVM |
-| DI | Hilt |
-| Local Storage | Room + DataStore |
-| Networking | Retrofit + OkHttp + Kotlinx Serialization |
-| Backend | Supabase (Auth + PostgreSQL) |
-| Image Loading | Coil |
-| Async | Kotlin Coroutines + Flow |
-| Testing | JUnit + MockK + Turbine |
-| Logging | Timber |
+| Category | Technology | Version |
+|----------|------------|---------|
+| Language | Kotlin | 2.0.21 |
+| UI Framework | Jetpack Compose + Material 3 | BOM 2024.11.00 |
+| Architecture | Clean Architecture + MVVM | - |
+| DI | Hilt | 2.52 |
+| Local Storage | Room | 2.6.1 |
+| Preferences | DataStore | 1.1.1 |
+| Networking | Retrofit + OkHttp | 2.11.0 / 4.12.0 |
+| Serialization | Kotlinx Serialization | 1.7.3 |
+| Backend | Supabase (Auth + PostgreSQL) | 3.0.2 |
+| HTTP Client | Ktor | 3.0.1 |
+| Image Loading | Coil | 2.7.0 |
+| Async | Kotlin Coroutines + Flow | 1.9.0 |
+| Testing | JUnit + MockK + Turbine | 4.13.2 / 1.13.13 / 1.2.0 |
+| Logging | Timber | 5.0.1 |
 
 ## Setup
 
 ### Prerequisites
-- Android Studio Hedgehog or newer
+- Android Studio Ladybug or newer
 - JDK 17
 - Android SDK 35
 
@@ -121,9 +125,10 @@ app/
 ## Supabase Database Setup
 
 See `supabase/setup.sql` for complete database schema including:
-- Tables: `favorites`, `meal_plan_entries`, `shopping_list_items`
-- Row Level Security (RLS) policies
-- Required indexes
+- Tables: `favorites`, `meal_plan_entries`, `shopping_list_items`, `profiles`
+- Row Level Security (RLS) policies for all tables
+- Required indexes for performance
+- Auto-create profile trigger on user signup
 
 ## API
 
@@ -190,6 +195,7 @@ Final/
 │   └── libs.versions.toml           # Version Catalog
 ├── supabase/
 │   └── setup.sql                    # Database Schema
+├── screenshots/                     # App Screenshots
 ├── build.gradle.kts
 ├── settings.gradle.kts
 └── README.md
@@ -214,7 +220,7 @@ Key test files:
 - State hoisting in Compose
 - Sealed classes for UI states and events
 - Flow-based reactive data
-- Error handling with AppResult/AppError
+- Error handling with AppResult
 
 ## Offline Support
 

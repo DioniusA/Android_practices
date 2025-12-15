@@ -7,9 +7,6 @@ import androidx.room.Query
 import com.example.recipeplanner.data.local.entity.FavoriteEntity
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Data Access Object for favorite recipes operations.
- */
 @Dao
 interface FavoriteDao {
     @Query("SELECT * FROM favorites WHERE userId = :userId ORDER BY addedAt DESC")

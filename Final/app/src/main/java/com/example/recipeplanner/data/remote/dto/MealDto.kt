@@ -3,18 +3,12 @@ package com.example.recipeplanner.data.remote.dto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * Response wrapper for meals from TheMealDB.
- */
 @Serializable
 data class MealsResponse(
     @SerialName("meals")
     val meals: List<MealDto>? = null
 )
 
-/**
- * DTO for a meal from TheMealDB API.
- */
 @Serializable
 data class MealDto(
     @SerialName("idMeal")
@@ -44,7 +38,6 @@ data class MealDto(
     @SerialName("strSource")
     val strSource: String? = null,
 
-    // Ingredients 1-20
     @SerialName("strIngredient1") val strIngredient1: String? = null,
     @SerialName("strIngredient2") val strIngredient2: String? = null,
     @SerialName("strIngredient3") val strIngredient3: String? = null,
@@ -66,7 +59,6 @@ data class MealDto(
     @SerialName("strIngredient19") val strIngredient19: String? = null,
     @SerialName("strIngredient20") val strIngredient20: String? = null,
 
-    // Measures 1-20
     @SerialName("strMeasure1") val strMeasure1: String? = null,
     @SerialName("strMeasure2") val strMeasure2: String? = null,
     @SerialName("strMeasure3") val strMeasure3: String? = null,
@@ -88,9 +80,6 @@ data class MealDto(
     @SerialName("strMeasure19") val strMeasure19: String? = null,
     @SerialName("strMeasure20") val strMeasure20: String? = null
 ) {
-    /**
-     * Gets all non-empty ingredients paired with their measures.
-     */
     fun getIngredientPairs(): List<Pair<String, String>> {
         val ingredients = listOf(
             strIngredient1 to strMeasure1,

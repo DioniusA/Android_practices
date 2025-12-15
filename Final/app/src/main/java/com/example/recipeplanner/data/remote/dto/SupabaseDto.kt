@@ -3,9 +3,6 @@ package com.example.recipeplanner.data.remote.dto
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
-/**
- * DTO for user profile in Supabase.
- */
 @Serializable
 data class ProfileDto(
     @SerialName("id")
@@ -21,9 +18,6 @@ data class ProfileDto(
     val createdAt: String? = null
 )
 
-/**
- * DTO for favorite recipe in Supabase.
- */
 @Serializable
 data class FavoriteDto(
     @SerialName("id")
@@ -48,9 +42,6 @@ data class FavoriteDto(
     val addedAt: String
 )
 
-/**
- * DTO for meal plan entry in Supabase.
- */
 @Serializable
 data class MealPlanEntryDto(
     @SerialName("id")
@@ -69,15 +60,12 @@ data class MealPlanEntryDto(
     val recipeImageUrl: String,
 
     @SerialName("date")
-    val date: String, // ISO date string
+    val date: String,
 
     @SerialName("meal_type")
     val mealType: String
 )
 
-/**
- * DTO for shopping list item in Supabase.
- */
 @Serializable
 data class ShoppingListItemDto(
     @SerialName("id")

@@ -6,9 +6,6 @@ import com.example.recipeplanner.domain.model.MealPlanEntry
 import com.example.recipeplanner.domain.model.MealType
 import java.time.LocalDate
 
-/**
- * Maps MealPlanEntryDto from Supabase to domain MealPlanEntry model.
- */
 fun MealPlanEntryDto.toMealPlanEntry(): MealPlanEntry {
     return MealPlanEntry(
         id = id,
@@ -25,9 +22,6 @@ fun MealPlanEntryDto.toMealPlanEntry(): MealPlanEntry {
     )
 }
 
-/**
- * Maps MealPlanEntity from local storage to domain MealPlanEntry model.
- */
 fun MealPlanEntity.toMealPlanEntry(): MealPlanEntry {
     return MealPlanEntry(
         id = id,
@@ -44,9 +38,6 @@ fun MealPlanEntity.toMealPlanEntry(): MealPlanEntry {
     )
 }
 
-/**
- * Maps domain MealPlanEntry to MealPlanEntity for local storage.
- */
 fun MealPlanEntry.toEntity(): MealPlanEntity {
     return MealPlanEntity(
         id = id,
@@ -59,9 +50,6 @@ fun MealPlanEntry.toEntity(): MealPlanEntity {
     )
 }
 
-/**
- * Maps domain MealPlanEntry to MealPlanEntryDto for Supabase.
- */
 fun MealPlanEntry.toDto(): MealPlanEntryDto {
     return MealPlanEntryDto(
         id = id,

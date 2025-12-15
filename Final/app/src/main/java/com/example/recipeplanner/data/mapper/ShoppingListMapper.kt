@@ -9,9 +9,6 @@ import kotlinx.serialization.json.Json
 
 private val json = Json { ignoreUnknownKeys = true }
 
-/**
- * Maps ShoppingListItemDto from Supabase to domain ShoppingListItem model.
- */
 fun ShoppingListItemDto.toShoppingListItem(): ShoppingListItem {
     return ShoppingListItem(
         id = id,
@@ -28,9 +25,6 @@ fun ShoppingListItemDto.toShoppingListItem(): ShoppingListItem {
     )
 }
 
-/**
- * Maps ShoppingListEntity from local storage to domain ShoppingListItem model.
- */
 fun ShoppingListEntity.toShoppingListItem(): ShoppingListItem {
     val recipeIdsList = try {
         json.decodeFromString<List<String>>(recipeIdsJson)
@@ -53,9 +47,6 @@ fun ShoppingListEntity.toShoppingListItem(): ShoppingListItem {
     )
 }
 
-/**
- * Maps domain ShoppingListItem to ShoppingListEntity for local storage.
- */
 fun ShoppingListItem.toEntity(): ShoppingListEntity {
     return ShoppingListEntity(
         id = id,
@@ -68,9 +59,6 @@ fun ShoppingListItem.toEntity(): ShoppingListEntity {
     )
 }
 
-/**
- * Maps domain ShoppingListItem to ShoppingListItemDto for Supabase.
- */
 fun ShoppingListItem.toDto(): ShoppingListItemDto {
     return ShoppingListItemDto(
         id = id,

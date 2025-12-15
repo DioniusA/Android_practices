@@ -1,8 +1,5 @@
 package com.example.recipeplanner.presentation.navigation
 
-/**
- * Navigation routes for the app.
- */
 object NavRoutes {
     const val AUTH = "auth"
     const val LOGIN = "login"
@@ -21,9 +18,6 @@ object NavRoutes {
     fun cookMode(recipeId: String) = "cook_mode/$recipeId"
 }
 
-/**
- * Bottom navigation destinations.
- */
 enum class BottomNavDestination(
     val route: String,
     val title: String,

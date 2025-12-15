@@ -23,9 +23,6 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Implementation of FavoriteRepository with Supabase and Room offline support.
- */
 @Singleton
 class FavoriteRepositoryImpl @Inject constructor(
     private val supabaseClient: SupabaseClient,
@@ -61,16 +58,13 @@ class FavoriteRepositoryImpl @Inject constructor(
             addedAt = Instant.now()
         )
 
-        // Save locally first
         favoriteDao.insert(favorite.toEntity())
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].insert(favorite.toDto())
             AppResult.Success(Unit)
         } catch (e: Exception) {
             Timber.e(e, "Failed to sync favorite to Supabase")
-            // Still return success since it's saved locally
             AppResult.Success(Unit)
         }
     }
@@ -79,10 +73,8 @@ class FavoriteRepositoryImpl @Inject constructor(
         val userId = authRepository.getCurrentUserId()
             ?: return AppResult.Error(AppError.AuthError("User not authenticated"))
 
-        // Remove locally first
         favoriteDao.delete(recipeId, userId)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].delete {
                 filter {
@@ -122,7 +114,6 @@ class FavoriteRepositoryImpl @Inject constructor(
                 }
                 .decodeList<FavoriteDto>()
 
-            // Update local cache
             favoriteDao.deleteAllByUser(userId)
             favoriteDao.insertAll(response.map { it.toFavoriteRecipe().toEntity() })
 

@@ -15,9 +15,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Implementation of AuthRepository using Supabase Auth.
- */
 @Singleton
 class AuthRepositoryImpl @Inject constructor(
     private val supabaseClient: SupabaseClient
@@ -94,7 +91,6 @@ class AuthRepositoryImpl @Inject constructor(
                     )
                 )
             } else {
-                // User created but needs email confirmation
                 AppResult.Error(AppError.AuthError("Please check your email to confirm your account"))
             }
         } catch (e: Exception) {

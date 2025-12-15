@@ -34,9 +34,6 @@ import com.example.recipeplanner.domain.model.Ingredient
 import com.example.recipeplanner.domain.model.Recipe
 import com.example.recipeplanner.presentation.theme.RecipePlannerTheme
 
-/**
- * A card component displaying a recipe preview.
- */
 @Composable
 fun RecipeCard(
     recipe: Recipe,

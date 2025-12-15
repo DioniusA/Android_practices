@@ -11,9 +11,6 @@ import com.example.recipeplanner.data.local.entity.MealPlanEntity
 import com.example.recipeplanner.data.local.entity.RecipeEntity
 import com.example.recipeplanner.data.local.entity.ShoppingListEntity
 
-/**
- * Main Room database for the app.
- */
 @Database(
     entities = [
         RecipeEntity::class,

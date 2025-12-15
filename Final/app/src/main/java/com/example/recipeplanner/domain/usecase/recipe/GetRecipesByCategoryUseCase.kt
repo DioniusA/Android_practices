@@ -5,9 +5,6 @@ import com.example.recipeplanner.domain.repository.RecipeRepository
 import com.example.recipeplanner.domain.util.AppResult
 import javax.inject.Inject
 
-/**
- * Use case for getting recipes by category.
- */
 class GetRecipesByCategoryUseCase @Inject constructor(
     private val recipeRepository: RecipeRepository
 ) {

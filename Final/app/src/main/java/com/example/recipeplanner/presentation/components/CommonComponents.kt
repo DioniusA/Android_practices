@@ -26,9 +26,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeplanner.presentation.theme.RecipePlannerTheme
 
-/**
- * Full screen loading indicator.
- */
 @Composable
 fun LoadingView(
     modifier: Modifier = Modifier,
@@ -56,9 +53,6 @@ fun LoadingView(
     }
 }
 
-/**
- * Empty state view.
- */
 @Composable
 fun EmptyView(
     message: String,
@@ -99,9 +93,6 @@ fun EmptyView(
     }
 }
 
-/**
- * Error state view with retry option.
- */
 @Composable
 fun ErrorView(
     message: String,
@@ -141,9 +132,6 @@ fun ErrorView(
     }
 }
 
-/**
- * Offline indicator view.
- */
 @Composable
 fun OfflineView(
     modifier: Modifier = Modifier,

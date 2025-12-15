@@ -117,8 +117,6 @@ class CookModeViewModel @Inject constructor(
     }
 
     private fun parseInstructions(instructions: String): List<String> {
-        // Split instructions into steps
-        // Try to split by numbered steps or newlines
         val steps = instructions
             .split(Regex("(?=\\d+[.)])|(?=Step\\s*\\d+)|\\r?\\n\\r?\\n"))
             .map { it.trim() }

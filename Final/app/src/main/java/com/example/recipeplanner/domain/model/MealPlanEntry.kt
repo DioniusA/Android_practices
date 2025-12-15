@@ -2,9 +2,6 @@ package com.example.recipeplanner.domain.model
 
 import java.time.LocalDate
 
-/**
- * Represents a single entry in the meal plan.
- */
 data class MealPlanEntry(
     val id: String,
     val userId: String,
@@ -15,9 +12,6 @@ data class MealPlanEntry(
     val mealType: MealType
 )
 
-/**
- * Types of meals for the meal plan.
- */
 enum class MealType {
     BREAKFAST,
     LUNCH,

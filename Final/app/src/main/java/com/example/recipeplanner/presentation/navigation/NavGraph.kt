@@ -106,7 +106,6 @@ fun MainNavGraph(
         startDestination = if (isAuthenticated) NavRoutes.MAIN else NavRoutes.AUTH,
         modifier = modifier
     ) {
-        // Auth screen
         composable(NavRoutes.AUTH) {
             val viewModel: AuthViewModel = hiltViewModel()
             val state by viewModel.uiState.collectAsStateWithLifecycle()
@@ -128,7 +127,6 @@ fun MainNavGraph(
             )
         }
         
-        // Main screen with bottom navigation
         composable(NavRoutes.MAIN) {
             MainScreen(
                 snackbarHostState = snackbarHostState,
@@ -141,7 +139,6 @@ fun MainNavGraph(
             )
         }
         
-        // Recipe details
         composable(
             route = NavRoutes.RECIPE_DETAILS,
             arguments = listOf(navArgument("recipeId") { type = NavType.StringType })
@@ -170,7 +167,6 @@ fun MainNavGraph(
             )
         }
         
-        // Cook mode
         composable(
             route = NavRoutes.COOK_MODE,
             arguments = listOf(navArgument("recipeId") { type = NavType.StringType })

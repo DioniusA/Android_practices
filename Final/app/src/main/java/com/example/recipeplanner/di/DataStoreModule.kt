@@ -13,9 +13,6 @@ import javax.inject.Singleton
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "settings")
 
-/**
- * Hilt module providing DataStore dependency.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object DataStoreModule {

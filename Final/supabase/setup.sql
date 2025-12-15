@@ -1,9 +1,3 @@
--- ============================================
--- Recipe Planner - Supabase Database Setup
--- ============================================
--- Run this SQL in your Supabase SQL Editor
--- ============================================
-
 -- Enable UUID extension (usually already enabled)
 CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
 
@@ -168,34 +162,3 @@ CREATE TRIGGER on_auth_user_created
     AFTER INSERT ON auth.users
     FOR EACH ROW EXECUTE FUNCTION public.handle_new_user();
 
--- ============================================
--- HELPFUL QUERIES
--- ============================================
-
--- Get all favorites for a user (for testing)
--- SELECT * FROM favorites WHERE user_id = 'your-user-id';
-
--- Get meal plan for a week
--- SELECT * FROM meal_plan_entries 
--- WHERE user_id = 'your-user-id' 
--- AND date BETWEEN '2024-01-01' AND '2024-01-07'
--- ORDER BY date, meal_type;
-
--- Get shopping list grouped by category
--- SELECT category, array_agg(ingredient_name) as ingredients
--- FROM shopping_list_items
--- WHERE user_id = 'your-user-id'
--- GROUP BY category;
-
--- ============================================
--- NOTES
--- ============================================
--- 
--- 1. All tables use UUID for primary keys
--- 2. All tables have RLS enabled with user-scoped policies
--- 3. Recipes are stored as references (recipe_id) not full data
--- 4. recipe_name and recipe_image_url are snapshots for quick display
--- 5. Shopping list items can be linked to multiple recipes via recipe_ids array
---
--- To test RLS policies, you can use the Supabase Dashboard
--- or run queries with: SET LOCAL role = 'authenticated';

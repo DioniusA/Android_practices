@@ -7,9 +7,6 @@ import androidx.room.Query
 import com.example.recipeplanner.data.local.entity.MealPlanEntity
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Data Access Object for meal plan operations.
- */
 @Dao
 interface MealPlanDao {
     @Query("SELECT * FROM meal_plan WHERE userId = :userId ORDER BY date, mealType")

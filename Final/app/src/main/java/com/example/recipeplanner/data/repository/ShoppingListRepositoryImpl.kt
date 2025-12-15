@@ -19,9 +19,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Implementation of ShoppingListRepository with Supabase and Room offline support.
- */
 @Singleton
 class ShoppingListRepositoryImpl @Inject constructor(
     private val supabaseClient: SupabaseClient,
@@ -38,10 +35,8 @@ class ShoppingListRepositoryImpl @Inject constructor(
     }
 
     override suspend fun addItem(item: ShoppingListItem): AppResult<Unit> {
-        // Save locally first
         shoppingListDao.insert(item.toEntity())
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].insert(item.toDto())
             AppResult.Success(Unit)
@@ -54,10 +49,8 @@ class ShoppingListRepositoryImpl @Inject constructor(
     override suspend fun addItems(items: List<ShoppingListItem>): AppResult<Unit> {
         if (items.isEmpty()) return AppResult.Success(Unit)
 
-        // Save locally first
         shoppingListDao.insertAll(items.map { it.toEntity() })
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].insert(items.map { it.toDto() })
             AppResult.Success(Unit)
@@ -71,10 +64,8 @@ class ShoppingListRepositoryImpl @Inject constructor(
         val item = shoppingListDao.getById(itemId)
             ?: return AppResult.Error(AppError.NotFound("Item not found"))
 
-        // Update locally first
         shoppingListDao.toggleChecked(itemId)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].update({
                 set("is_checked", !item.isChecked)
@@ -91,10 +82,8 @@ class ShoppingListRepositoryImpl @Inject constructor(
     }
 
     override suspend fun removeItem(itemId: String): AppResult<Unit> {
-        // Remove locally first
         shoppingListDao.delete(itemId)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].delete {
                 filter {
@@ -112,10 +101,8 @@ class ShoppingListRepositoryImpl @Inject constructor(
         val userId = authRepository.getCurrentUserId()
             ?: return AppResult.Error(AppError.AuthError("User not authenticated"))
 
-        // Clear locally first
         shoppingListDao.deleteCheckedByUser(userId)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].delete {
                 filter {
@@ -134,10 +121,8 @@ class ShoppingListRepositoryImpl @Inject constructor(
         val userId = authRepository.getCurrentUserId()
             ?: return AppResult.Error(AppError.AuthError("User not authenticated"))
 
-        // Clear locally first
         shoppingListDao.deleteAllByUser(userId)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].delete {
                 filter {
@@ -164,7 +149,6 @@ class ShoppingListRepositoryImpl @Inject constructor(
                 }
                 .decodeList<ShoppingListItemDto>()
 
-            // Update local cache
             shoppingListDao.deleteAllByUser(userId)
             shoppingListDao.insertAll(response.map { it.toShoppingListItem().toEntity() })
 

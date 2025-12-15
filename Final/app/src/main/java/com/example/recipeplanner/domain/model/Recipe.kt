@@ -1,9 +1,5 @@
 package com.example.recipeplanner.domain.model
 
-/**
- * Domain model representing a recipe.
- * Used across the application for recipe-related operations.
- */
 data class Recipe(
     val id: String,
     val name: String,
@@ -17,9 +13,6 @@ data class Recipe(
     val sourceUrl: String?
 )
 
-/**
- * Represents a single ingredient with its measurement.
- */
 data class Ingredient(
     val name: String,
     val measure: String

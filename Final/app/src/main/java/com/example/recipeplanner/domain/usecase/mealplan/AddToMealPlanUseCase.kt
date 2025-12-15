@@ -7,9 +7,6 @@ import com.example.recipeplanner.domain.util.AppResult
 import java.time.LocalDate
 import javax.inject.Inject
 
-/**
- * Use case for adding a recipe to the meal plan.
- */
 class AddToMealPlanUseCase @Inject constructor(
     private val mealPlanRepository: MealPlanRepository
 ) {

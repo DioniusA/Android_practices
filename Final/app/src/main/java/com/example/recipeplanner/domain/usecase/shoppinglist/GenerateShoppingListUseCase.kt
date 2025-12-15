@@ -11,10 +11,6 @@ import com.example.recipeplanner.domain.util.AppResult
 import java.util.UUID
 import javax.inject.Inject
 
-/**
- * Use case for generating a shopping list from meal plan entries.
- * Aggregates ingredients from all recipes and merges duplicates.
- */
 class GenerateShoppingListUseCase @Inject constructor(
     private val recipeRepository: RecipeRepository,
     private val shoppingListRepository: ShoppingListRepository
@@ -23,7 +19,6 @@ class GenerateShoppingListUseCase @Inject constructor(
         mealPlanEntries: List<MealPlanEntry>,
         userId: String
     ): AppResult<List<ShoppingListItem>> {
-        // Collect all ingredients from all recipes
         val ingredientMap = mutableMapOf<String, AggregatedIngredient>()
 
         for (entry in mealPlanEntries) {
@@ -34,7 +29,6 @@ class GenerateShoppingListUseCase @Inject constructor(
                     val key = ingredient.name.lowercase().trim()
                     val existing = ingredientMap[key]
                     if (existing != null) {
-                        // Merge with existing ingredient
                         ingredientMap[key] = existing.copy(
                             quantities = existing.quantities + ingredient.measure,
                             recipeIds = existing.recipeIds + entry.recipeId
@@ -50,7 +44,6 @@ class GenerateShoppingListUseCase @Inject constructor(
             }
         }
 
-        // Convert to shopping list items
         val items = ingredientMap.values.map { agg ->
             ShoppingListItem(
                 id = UUID.randomUUID().toString(),
@@ -63,7 +56,6 @@ class GenerateShoppingListUseCase @Inject constructor(
             )
         }.sortedWith(compareBy({ it.category }, { it.ingredientName }))
 
-        // Save to repository
         val saveResult = shoppingListRepository.addItems(items)
         return saveResult.map { items }
     }

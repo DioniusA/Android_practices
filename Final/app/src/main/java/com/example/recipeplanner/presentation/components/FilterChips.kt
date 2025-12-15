@@ -16,9 +16,6 @@ import androidx.compose.ui.unit.dp
 import com.example.recipeplanner.domain.model.Category
 import com.example.recipeplanner.presentation.theme.RecipePlannerTheme
 
-/**
- * Horizontal scrollable row of category filter chips.
- */
 @Composable
 fun CategoryFilterChips(
     categories: List<Category>,
@@ -32,7 +29,6 @@ fun CategoryFilterChips(
             .padding(horizontal = 16.dp),
         horizontalArrangement = Arrangement.spacedBy(8.dp)
     ) {
-        // "All" chip
         FilterChip(
             selected = selectedCategory == null,
             onClick = { onCategorySelected(null) },
@@ -43,7 +39,6 @@ fun CategoryFilterChips(
             )
         )
         
-        // Category chips
         categories.forEach { category ->
             FilterChip(
                 selected = selectedCategory == category.name,
@@ -58,9 +53,6 @@ fun CategoryFilterChips(
     }
 }
 
-/**
- * Simple string filter chips.
- */
 @Composable
 fun StringFilterChips(
     items: List<String>,

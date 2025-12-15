@@ -1,9 +1,5 @@
 package com.example.recipeplanner.domain.util
 
-/**
- * A sealed class representing the result of an operation.
- * Used throughout the app for consistent error handling.
- */
 sealed class AppResult<out T> {
     data class Success<T>(val data: T) : AppResult<T>()
     data class Error(val error: AppError) : AppResult<Nothing>()
@@ -42,14 +38,10 @@ sealed class AppResult<out T> {
     }
 }
 
-/**
- * Sealed class representing different types of errors in the app.
- */
 sealed class AppError(
     open val message: String,
     open val cause: Throwable? = null
 ) {
-    // Network errors
     data class NetworkError(
         override val message: String = "Network error occurred",
         override val cause: Throwable? = null
@@ -61,7 +53,6 @@ sealed class AppError(
         override val cause: Throwable? = null
     ) : AppError(message, cause)
 
-    // Auth errors
     data class AuthError(
         override val message: String = "Authentication error",
         override val cause: Throwable? = null
@@ -79,7 +70,6 @@ sealed class AppError(
         override val message: String = "Email already registered"
     ) : AppError(message)
 
-    // Data errors
     data class NotFound(
         override val message: String = "Resource not found"
     ) : AppError(message)
@@ -89,16 +79,12 @@ sealed class AppError(
         override val cause: Throwable? = null
     ) : AppError(message, cause)
 
-    // Generic error
     data class Unknown(
         override val message: String = "An unknown error occurred",
         override val cause: Throwable? = null
     ) : AppError(message, cause)
 }
 
-/**
- * Extension function to convert a Throwable to an AppError.
- */
 fun Throwable.toAppError(): AppError = when (this) {
     is java.net.UnknownHostException -> AppError.NetworkError(cause = this)
     is java.net.SocketTimeoutException -> AppError.NetworkError("Connection timed out", this)
@@ -106,9 +92,6 @@ fun Throwable.toAppError(): AppError = when (this) {
     else -> AppError.Unknown(message ?: "Unknown error", this)
 }
 
-/**
- * Runs a suspending block and wraps the result in AppResult.
- */
 suspend fun <T> runCatching(block: suspend () -> T): AppResult<T> = try {
     AppResult.Success(block())
 } catch (e: Exception) {

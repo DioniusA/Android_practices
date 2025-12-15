@@ -3,9 +3,6 @@ package com.example.recipeplanner.data.local.entity
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
-/**
- * Room entity for caching meal plan entries locally.
- */
 @Entity(tableName = "meal_plan")
 data class MealPlanEntity(
     @PrimaryKey

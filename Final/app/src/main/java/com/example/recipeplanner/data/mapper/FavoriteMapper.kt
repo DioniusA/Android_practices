@@ -5,9 +5,6 @@ import com.example.recipeplanner.data.remote.dto.FavoriteDto
 import com.example.recipeplanner.domain.model.FavoriteRecipe
 import java.time.Instant
 
-/**
- * Maps FavoriteDto from Supabase to domain FavoriteRecipe model.
- */
 fun FavoriteDto.toFavoriteRecipe(): FavoriteRecipe {
     return FavoriteRecipe(
         id = id,
@@ -24,9 +21,6 @@ fun FavoriteDto.toFavoriteRecipe(): FavoriteRecipe {
     )
 }
 
-/**
- * Maps FavoriteEntity from local storage to domain FavoriteRecipe model.
- */
 fun FavoriteEntity.toFavoriteRecipe(): FavoriteRecipe {
     return FavoriteRecipe(
         id = id,
@@ -39,9 +33,6 @@ fun FavoriteEntity.toFavoriteRecipe(): FavoriteRecipe {
     )
 }
 
-/**
- * Maps domain FavoriteRecipe to FavoriteEntity for local storage.
- */
 fun FavoriteRecipe.toEntity(): FavoriteEntity {
     return FavoriteEntity(
         id = id,
@@ -54,9 +45,6 @@ fun FavoriteRecipe.toEntity(): FavoriteEntity {
     )
 }
 
-/**
- * Maps domain FavoriteRecipe to FavoriteDto for Supabase.
- */
 fun FavoriteRecipe.toDto(): FavoriteDto {
     return FavoriteDto(
         id = id,

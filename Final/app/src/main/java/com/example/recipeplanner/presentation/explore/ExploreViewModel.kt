@@ -90,7 +90,6 @@ class ExploreViewModel @Inject constructor(
                     _uiState.update { it.copy(categories = result.data) }
                 }
                 is AppResult.Error -> {
-                    // Categories are optional, don't show error
                 }
             }
         }
@@ -100,7 +99,6 @@ class ExploreViewModel @Inject constructor(
         viewModelScope.launch {
             _uiState.update { it.copy(recipes = UiState.Loading) }
             
-            // Load some popular recipes by searching for common terms
             when (val result = searchRecipesUseCase("chicken")) {
                 is AppResult.Success -> {
                     val recipes = result.data

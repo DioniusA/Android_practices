@@ -23,9 +23,6 @@ import java.util.UUID
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Implementation of MealPlanRepository with Supabase and Room offline support.
- */
 @Singleton
 class MealPlanRepositoryImpl @Inject constructor(
     private val supabaseClient: SupabaseClient,
@@ -74,10 +71,8 @@ class MealPlanRepositoryImpl @Inject constructor(
             mealType = mealType
         )
 
-        // Save locally first
         mealPlanDao.insert(entry.toEntity())
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].insert(entry.toDto())
             AppResult.Success(Unit)
@@ -88,10 +83,8 @@ class MealPlanRepositoryImpl @Inject constructor(
     }
 
     override suspend fun removeFromMealPlan(entryId: String): AppResult<Unit> {
-        // Remove locally first
         mealPlanDao.delete(entryId)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].delete {
                 filter {
@@ -118,10 +111,8 @@ class MealPlanRepositoryImpl @Inject constructor(
             mealType = mealType.name
         )
 
-        // Update locally first
         mealPlanDao.insert(updated)
 
-        // Sync to Supabase
         return try {
             supabaseClient.postgrest[table].update({
                 set("date", date.toString())
@@ -151,7 +142,6 @@ class MealPlanRepositoryImpl @Inject constructor(
                 }
                 .decodeList<MealPlanEntryDto>()
 
-            // Update local cache
             mealPlanDao.deleteAllByUser(userId)
             mealPlanDao.insertAll(response.map { it.toMealPlanEntry().toEntity() })
 

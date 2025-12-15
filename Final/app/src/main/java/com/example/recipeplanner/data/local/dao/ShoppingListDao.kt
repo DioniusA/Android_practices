@@ -7,9 +7,6 @@ import androidx.room.Query
 import com.example.recipeplanner.data.local.entity.ShoppingListEntity
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Data Access Object for shopping list operations.
- */
 @Dao
 interface ShoppingListDao {
     @Query("SELECT * FROM shopping_list WHERE userId = :userId ORDER BY category, ingredientName")

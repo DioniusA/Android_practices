@@ -12,9 +12,6 @@ import io.github.jan.supabase.postgrest.Postgrest
 import io.github.jan.supabase.realtime.Realtime
 import javax.inject.Singleton
 
-/**
- * Hilt module providing Supabase dependencies.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object SupabaseModule {

@@ -15,9 +15,6 @@ import retrofit2.Retrofit
 import java.util.concurrent.TimeUnit
 import javax.inject.Singleton
 
-/**
- * Hilt module providing network dependencies.
- */
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {

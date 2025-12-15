@@ -9,9 +9,6 @@ import com.example.recipeplanner.domain.model.Recipe
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 
-/**
- * Maps MealDto from API to domain Recipe model.
- */
 fun MealDto.toRecipe(): Recipe {
     val ingredientPairs = getIngredientPairs()
     val ingredients = ingredientPairs.map { (name, measure) ->
@@ -32,9 +29,6 @@ fun MealDto.toRecipe(): Recipe {
     )
 }
 
-/**
- * Maps CategoryDto from API to domain Category model.
- */
 fun CategoryDto.toCategory(): Category {
     return Category(
         id = idCategory,
@@ -44,9 +38,6 @@ fun CategoryDto.toCategory(): Category {
     )
 }
 
-/**
- * Maps Recipe domain model to RecipeEntity for local storage.
- */
 fun Recipe.toEntity(): RecipeEntity {
     val json = Json { ignoreUnknownKeys = true }
     return RecipeEntity(
@@ -63,9 +54,6 @@ fun Recipe.toEntity(): RecipeEntity {
     )
 }
 
-/**
- * Maps RecipeEntity from local storage to domain Recipe model.
- */
 fun RecipeEntity.toRecipe(): Recipe {
     val json = Json { ignoreUnknownKeys = true }
     val ingredientsList = try {

@@ -21,9 +21,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.recipeplanner.presentation.theme.RecipePlannerTheme
 
-/**
- * Search bar component for recipe search.
- */
 @Composable
 fun RecipeSearchBar(
     query: String,

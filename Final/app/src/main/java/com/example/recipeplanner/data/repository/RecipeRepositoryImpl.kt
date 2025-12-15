@@ -17,9 +17,6 @@ import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
-/**
- * Implementation of RecipeRepository using TheMealDB API with Room caching.
- */
 @Singleton
 class RecipeRepositoryImpl @Inject constructor(
     private val api: MealDbApi,
@@ -39,7 +36,6 @@ class RecipeRepositoryImpl @Inject constructor(
             AppResult.Success(recipes)
         } catch (e: Exception) {
             Timber.e(e, "Failed to search recipes")
-            // Try to return cached results
             val cached = recipeDao.searchRecipes(query).map { it.toRecipe() }
             if (cached.isNotEmpty()) {
                 AppResult.Success(cached)
@@ -51,11 +47,9 @@ class RecipeRepositoryImpl @Inject constructor(
 
     override suspend fun getRecipesByCategory(category: String): AppResult<List<Recipe>> {
         return try {
-            // First get the list of meals in the category (only contains id, name, thumb)
             val filterResponse = api.filterByCategory(category)
             val mealIds = filterResponse.meals?.map { it.idMeal } ?: emptyList()
 
-            // For each meal, get the full details
             val recipes = mealIds.take(20).mapNotNull { id ->
                 try {
                     val response = api.getMealById(id)
@@ -66,7 +60,6 @@ class RecipeRepositoryImpl @Inject constructor(
                 }
             }
 
-            // Cache the recipes
             if (recipes.isNotEmpty()) {
                 recipeDao.insertRecipes(recipes.map { it.toEntity() })
             }
@@ -74,7 +67,6 @@ class RecipeRepositoryImpl @Inject constructor(
             AppResult.Success(recipes)
         } catch (e: Exception) {
             Timber.e(e, "Failed to get recipes by category")
-            // Try to return cached results
             val cached = recipeDao.getRecipesByCategory(category).map { it.toRecipe() }
             if (cached.isNotEmpty()) {
                 AppResult.Success(cached)
@@ -85,13 +77,11 @@ class RecipeRepositoryImpl @Inject constructor(
     }
 
     override suspend fun getRecipeById(id: String): AppResult<Recipe> {
-        // First check cache
         val cached = recipeDao.getRecipeById(id)
         if (cached != null) {
             return AppResult.Success(cached.toRecipe())
         }
 
-        // Fetch from API
         return try {
             val response = api.getMealById(id)
             val meal = response.meals?.firstOrNull()

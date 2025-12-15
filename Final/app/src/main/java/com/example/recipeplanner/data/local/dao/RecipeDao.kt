@@ -7,9 +7,6 @@ import androidx.room.Query
 import com.example.recipeplanner.data.local.entity.RecipeEntity
 import kotlinx.coroutines.flow.Flow
 
-/**
- * Data Access Object for recipe caching operations.
- */
 @Dao
 interface RecipeDao {
     @Query("SELECT * FROM recipes ORDER BY cachedAt DESC")
