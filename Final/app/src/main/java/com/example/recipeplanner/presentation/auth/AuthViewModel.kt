@@ -25,7 +25,8 @@ data class AuthUiState(
     val confirmPassword: String = "",
     val isLoading: Boolean = false,
     val isLoginMode: Boolean = true,
-    val error: String? = null
+    val error: String? = null,
+    val successMessage: String? = null
 )
 
 sealed class AuthEvent {
@@ -55,26 +56,27 @@ class AuthViewModel @Inject constructor(
     fun onEvent(event: AuthEvent) {
         when (event) {
             is AuthEvent.EmailChanged -> {
-                _uiState.update { it.copy(email = event.email, error = null) }
+                _uiState.update { it.copy(email = event.email, error = null, successMessage = null) }
             }
             is AuthEvent.PasswordChanged -> {
-                _uiState.update { it.copy(password = event.password, error = null) }
+                _uiState.update { it.copy(password = event.password, error = null, successMessage = null) }
             }
             is AuthEvent.ConfirmPasswordChanged -> {
-                _uiState.update { it.copy(confirmPassword = event.confirmPassword, error = null) }
+                _uiState.update { it.copy(confirmPassword = event.confirmPassword, error = null, successMessage = null) }
             }
             AuthEvent.ToggleMode -> {
                 _uiState.update { 
                     it.copy(
                         isLoginMode = !it.isLoginMode, 
                         error = null,
+                        successMessage = null,
                         confirmPassword = ""
                     ) 
                 }
             }
             AuthEvent.Submit -> submit()
             AuthEvent.ClearError -> {
-                _uiState.update { it.copy(error = null) }
+                _uiState.update { it.copy(error = null, successMessage = null) }
             }
         }
     }
@@ -84,7 +86,7 @@ class AuthViewModel @Inject constructor(
         if (state.isLoading) return
 
         viewModelScope.launch {
-            _uiState.update { it.copy(isLoading = true, error = null) }
+            _uiState.update { it.copy(isLoading = true, error = null, successMessage = null) }
 
             val result: AppResult<User> = if (state.isLoginMode) {
                 signInUseCase(state.email, state.password)
@@ -94,12 +96,23 @@ class AuthViewModel @Inject constructor(
 
             when (result) {
                 is AppResult.Success -> {
-                    _uiState.update { it.copy(isLoading = false) }
-                    _effects.emit(UiEffect.ShowSnackbar("Welcome, ${result.data.email}!"))
+                    if (state.isLoginMode) {
+                        // Login success - show snackbar and navigate
+                        _uiState.update { it.copy(isLoading = false) }
+                        _effects.emit(UiEffect.ShowSnackbar("Welcome, ${result.data.email}!"))
+                    } else {
+                        // Signup success - show success message about email confirmation
+                        _uiState.update { 
+                            it.copy(
+                                isLoading = false,
+                                successMessage = "Подтверждение отправлено на почту. Пожалуйста, проверьте вашу электронную почту для подтверждения аккаунта."
+                            ) 
+                        }
+                    }
                 }
                 is AppResult.Error -> {
                     _uiState.update { 
-                        it.copy(isLoading = false, error = result.error.message) 
+                        it.copy(isLoading = false, error = result.error.message, successMessage = null) 
                     }
                 }
             }

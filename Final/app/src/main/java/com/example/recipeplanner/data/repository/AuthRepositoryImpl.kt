@@ -80,23 +80,25 @@ class AuthRepositoryImpl @Inject constructor(
                 this.password = password
             }
 
+            // Try to get user from session first, then from currentUserOrNull
             val session = auth.currentSessionOrNull()
-            val user = session?.user
-            if (user != null) {
-                AppResult.Success(
-                    User(
-                        id = user.id,
-                        email = user.email ?: email,
-                        displayName = null
-                    )
+            val user = session?.user ?: auth.currentUserOrNull()
+            
+            // Signup succeeded - even if no session (email confirmation needed), return success
+            // Use the email we passed in since we know it's correct
+            AppResult.Success(
+                User(
+                    id = user?.id ?: "",
+                    email = user?.email ?: email,
+                    displayName = null
                 )
-            } else {
-                AppResult.Error(AppError.AuthError("Please check your email to confirm your account"))
-            }
+            )
         } catch (e: Exception) {
             Timber.e(e, "Sign up failed")
             val error = when {
-                e.message?.contains("already registered") == true -> AppError.EmailAlreadyExists()
+                e.message?.contains("already registered") == true || 
+                e.message?.contains("already exists") == true ||
+                e.message?.contains("User already registered") == true -> AppError.EmailAlreadyExists()
                 else -> AppError.AuthError(e.message ?: "Sign up failed")
             }
             AppResult.Error(error)

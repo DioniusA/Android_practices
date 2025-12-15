@@ -104,7 +104,7 @@ fun AuthScreen(
                 onNext = { focusManager.moveFocus(FocusDirection.Down) }
             ),
             singleLine = true,
-            isError = state.error != null
+            isError = state.error != null && state.successMessage == null
         )
         
         Spacer(modifier = Modifier.height(16.dp))
@@ -139,7 +139,7 @@ fun AuthScreen(
                 }
             ),
             singleLine = true,
-            isError = state.error != null
+            isError = state.error != null && state.successMessage == null
         )
         
         // Confirm password field (register mode only)
@@ -175,13 +175,27 @@ fun AuthScreen(
                         }
                     ),
                     singleLine = true,
-                    isError = state.error != null
+                    isError = state.error != null && state.successMessage == null
+                )
+            }
+        }
+        
+        // Success message
+        AnimatedVisibility(visible = state.successMessage != null) {
+            Column {
+                Spacer(modifier = Modifier.height(8.dp))
+                Text(
+                    text = state.successMessage ?: "",
+                    color = MaterialTheme.colorScheme.primary,
+                    style = MaterialTheme.typography.bodySmall,
+                    textAlign = TextAlign.Center,
+                    modifier = Modifier.fillMaxWidth()
                 )
             }
         }
         
         // Error message
-        AnimatedVisibility(visible = state.error != null) {
+        AnimatedVisibility(visible = state.error != null && state.successMessage == null) {
             Column {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
