@@ -1,4 +1,4 @@
-# Recipe Planner
+# Chef Flow
 
 A modern Android application for meal planning, recipe discovery, and shopping list management. Built with Kotlin, Jetpack Compose, and Clean Architecture.
 

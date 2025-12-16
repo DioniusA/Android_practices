@@ -87,7 +87,7 @@ fun SettingsScreen(
             SettingsSection(title = "About") {
                 SettingsItem(
                     icon = Icons.Default.Settings,
-                    title = "Recipe Planner",
+                    title = "Chef Flow",
                     subtitle = "Version 1.0.0",
                     onClick = { onEvent(SettingsEvent.ShowAboutDialog) }
                 )
@@ -117,20 +117,20 @@ fun SettingsScreen(
         if (state.showAboutDialog) {
             AlertDialog(
                 onDismissRequest = { onEvent(SettingsEvent.DismissAboutDialog) },
-                title = { Text("Recipe Planner") },
+                title = { Text("Chef Flow") },
                 text = {
                     Column {
                         Text("Version 1.0.0")
                         Spacer(modifier = Modifier.height(8.dp))
                         Text(
-                            text = "Recipe Planner is your personal cooking assistant. " +
+                            text = "Chef Flow is your personal cooking assistant. " +
                                     "Discover new recipes, plan your meals for the week, " +
                                     "and generate shopping lists automatically.",
                             style = MaterialTheme.typography.bodyMedium
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Text(
-                            text = "© 2025 Recipe Planner",
+                            text = "© 2025 Chef Flow",
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
